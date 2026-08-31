@@ -239,6 +239,3 @@ GEMINI_API_KEY=AIzaSy...
 JWT_SECRET=super_secret_jwt_key_for_student_finance_auth
 DATABASE_URL=mongodb://localhost:27017/ai-finance-controller
 ```
-
-> [!TIP]
-> **Zero-Cost / Offline Mode**: If you do **not** provide any API keys, the application automatically uses the built-in browser **Web Speech API** + local **NLP Heuristic Extractor**, meaning all features work **100% free with zero configuration**!
