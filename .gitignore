@@ -1,0 +1,31 @@
+# Dependencies
+node_modules/
+frontend/node_modules/
+backend/node_modules/
+
+# Environment Variables & Secrets (CRITICAL: Never commit API keys)
+.env
+*.env
+backend/.env
+backend/*.env
+frontend/.env
+frontend/*.env
+.env.local
+.env.*.local
+
+# Production Builds
+dist/
+build/
+frontend/dist/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# System & Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
