@@ -40,6 +40,88 @@ export const regenerateBatch = (req, res) => {
   }
 };
 
+export const uploadCustomBatch = (req, res) => {
+  try {
+    const { invoices = [], bankSettlements = [], purchaseOrders = [] } = req.body;
+
+    if (!invoices.length && !bankSettlements.length) {
+      return res.status(400).json({ success: false, message: 'Please provide at least invoices or bank settlement records.' });
+    }
+
+    // Auto-generate missing counterpart structures if user uploaded single list
+    const processedInvoices = invoices.map((inv, i) => ({
+      invoiceNumber: inv.invoiceNumber || `INV-CUSTOM-${1000 + i}`,
+      poNumber: inv.poNumber || `PO-CUSTOM-${1000 + i}`,
+      vendorName: inv.vendorName || inv.vendor || 'Custom Vendor',
+      category: inv.category || 'General Operations',
+      gstin: inv.gstin || '29AABCA0000A1Z5',
+      baseAmount: parseFloat(inv.baseAmount) || parseFloat(inv.amount) || 10000,
+      taxAmount: parseFloat(inv.taxAmount) || Math.round((parseFloat(inv.baseAmount || inv.amount) || 10000) * 0.18),
+      totalAmount: parseFloat(inv.totalAmount) || parseFloat(inv.amount) || 11800,
+      invoiceDate: inv.invoiceDate || new Date().toISOString().split('T')[0],
+      dueDate: inv.dueDate || new Date().toISOString().split('T')[0],
+      status: 'PENDING_RECONCILIATION'
+    }));
+
+    const processedSettlements = bankSettlements.length > 0 ? bankSettlements.map((s, i) => ({
+      settlementId: s.settlementId || `SETTL-CUSTOM-${1000 + i}`,
+      utrNumber: s.utrNumber || `UTR${Date.now()}${i}`,
+      counterparty: s.counterparty || s.vendorName || s.vendor || 'Custom Vendor',
+      bankDescription: s.bankDescription || `NEFT-PAY-${s.invoiceNumber || 'CUSTOM'}`,
+      amountPaid: parseFloat(s.amountPaid) || parseFloat(s.amount) || 11800,
+      settlementDate: s.settlementDate || new Date().toISOString().split('T')[0],
+      source: s.source || 'CUSTOM_BANK_FEED',
+      status: 'UNRECONCILED'
+    })) : processedInvoices.map((inv, i) => ({
+      settlementId: `SETTL-CUSTOM-${1000 + i}`,
+      utrNumber: `UTR${Date.now().toString().slice(-8)}${1000 + i}`,
+      counterparty: inv.vendorName,
+      bankDescription: `NEFT-PAYMENT-${inv.invoiceNumber}`,
+      amountPaid: inv.totalAmount,
+      settlementDate: inv.invoiceDate,
+      source: 'CUSTOM_BANK_FEED',
+      status: 'UNRECONCILED'
+    }));
+
+    const processedPOs = purchaseOrders.length > 0 ? purchaseOrders : processedInvoices.map(inv => ({
+      poNumber: inv.poNumber,
+      vendorName: inv.vendorName,
+      category: inv.category,
+      approvedAmount: inv.totalAmount,
+      gstin: inv.gstin,
+      status: 'APPROVED',
+      issueDate: inv.invoiceDate
+    }));
+
+    activeBatch = {
+      batchMetadata: {
+        batchId: `BATCH-CUSTOM-${Date.now()}`,
+        createdAt: new Date().toISOString(),
+        totalInvoices: processedInvoices.length,
+        totalBankSettlements: processedSettlements.length,
+        totalPurchaseOrders: processedPOs.length,
+        targetOpsLoop: 'Custom User Uploaded Dataset'
+      },
+      invoices: processedInvoices,
+      bankSettlements: processedSettlements,
+      purchaseOrders: processedPOs
+    };
+
+    lastLoopResult = executeFinOpsLoop(activeBatch);
+
+    res.json({
+      success: true,
+      message: `Custom batch loaded with ${processedInvoices.length} invoices and ${processedSettlements.length} settlement feeds.`,
+      data: {
+        metadata: activeBatch.batchMetadata,
+        loopResult: lastLoopResult
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
 export const runFinOpsLoop = (req, res) => {
   try {
     lastLoopResult = executeFinOpsLoop(activeBatch);

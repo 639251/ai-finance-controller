@@ -54,6 +54,56 @@ export async function regenerateBatchApi(count = 60) {
   };
 }
 
+export async function uploadCustomBatchApi(invoices, bankSettlements = [], purchaseOrders = []) {
+  try {
+    const res = await fetch(`${API_BASE}/upload-batch`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ invoices, bankSettlements, purchaseOrders })
+    });
+    if (res.ok) {
+      const data = await res.json();
+      return data.data;
+    }
+  } catch (err) {
+    console.warn('Backend offline, running custom batch on client');
+  }
+
+  // Client-side fallback for custom batch
+  const batch = {
+    metadata: {
+      batchId: `BATCH-CUSTOM-${Date.now()}`,
+      totalInvoices: invoices.length,
+      totalBankSettlements: invoices.length,
+      totalPurchaseOrders: invoices.length
+    },
+    invoices,
+    bankSettlements: invoices.map((inv, i) => ({
+      settlementId: `SETTL-CUSTOM-${1000 + i}`,
+      utrNumber: `UTR${Date.now().toString().slice(-8)}${1000 + i}`,
+      counterparty: inv.vendorName,
+      bankDescription: `NEFT-PAY-${inv.invoiceNumber}`,
+      amountPaid: inv.totalAmount,
+      settlementDate: inv.invoiceDate || '2026-08-01',
+      source: 'CUSTOM_FEED'
+    })),
+    purchaseOrders: invoices.map(inv => ({
+      poNumber: inv.poNumber || 'PO-CUSTOM',
+      vendorName: inv.vendorName,
+      category: inv.category || 'General',
+      approvedAmount: inv.totalAmount,
+      gstin: inv.gstin || '29AABCA0000A1Z5',
+      status: 'APPROVED',
+      issueDate: inv.invoiceDate || '2026-08-01'
+    }))
+  };
+
+  return {
+    metadata: batch.metadata,
+    loopResult: runLocalReconciliation(batch)
+  };
+}
+
 export async function resolveExceptionApi(exceptionId, resolutionType, resolutionNotes) {
   try {
     const res = await fetch(`${API_BASE}/resolve-exception`, {

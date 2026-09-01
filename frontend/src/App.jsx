@@ -15,8 +15,9 @@ import AuthModal from './components/AuthModal';
 import FinOpsDashboard from './components/FinOpsDashboard';
 import BatchInspectorModal from './components/BatchInspectorModal';
 import AuditReportModal from './components/AuditReportModal';
+import UploadCustomDataModal from './components/UploadCustomDataModal';
 
-import { fetchBatchData, executeLoopApi, regenerateBatchApi, resolveExceptionApi } from './utils/finopsApi';
+import { fetchBatchData, executeLoopApi, regenerateBatchApi, resolveExceptionApi, uploadCustomBatchApi } from './utils/finopsApi';
 import { Mic, Sparkles, Plus, ShieldCheck, Zap } from 'lucide-react';
 
 function DashboardContent() {
@@ -38,6 +39,7 @@ function DashboardContent() {
   const [isLoadingFinOps, setIsLoadingFinOps] = useState(false);
   const [isBatchModalOpen, setIsBatchModalOpen] = useState(false);
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
+  const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
 
   // Initial FinOps batch load & auto-run
   useEffect(() => {
@@ -62,6 +64,17 @@ function DashboardContent() {
   const handleRegenerateBatch = async (count = 60) => {
     setIsLoadingFinOps(true);
     const result = await regenerateBatchApi(count);
+    if (result) {
+      setLoopResult(result.loopResult);
+      const updatedBatch = await fetchBatchData();
+      setBatchData(updatedBatch);
+    }
+    setIsLoadingFinOps(false);
+  };
+
+  const handleUploadBatch = async (records) => {
+    setIsLoadingFinOps(true);
+    const result = await uploadCustomBatchApi(records);
     if (result) {
       setLoopResult(result.loopResult);
       const updatedBatch = await fetchBatchData();
@@ -139,6 +152,7 @@ function DashboardContent() {
             onResolveException={handleResolveException}
             onOpenBatchModal={() => setIsBatchModalOpen(true)}
             onOpenReportModal={() => setIsReportModalOpen(true)}
+            onOpenUploadModal={() => setIsUploadModalOpen(true)}
             isLoading={isLoadingFinOps}
             batchCount={batchData?.invoices?.length || 60}
           />
@@ -263,6 +277,12 @@ function DashboardContent() {
         isOpen={isReportModalOpen}
         onClose={() => setIsReportModalOpen(false)}
         loopData={loopResult}
+      />
+
+      <UploadCustomDataModal
+        isOpen={isUploadModalOpen}
+        onClose={() => setIsUploadModalOpen(false)}
+        onUploadBatch={handleUploadBatch}
       />
 
       {/* Personal Finance Modals */}

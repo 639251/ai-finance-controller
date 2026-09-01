@@ -40,6 +40,7 @@ export default function FinOpsDashboard({
   onResolveException,
   onOpenBatchModal,
   onOpenReportModal,
+  onOpenUploadModal,
   isLoading,
   batchCount
 }) {
@@ -155,40 +156,48 @@ export default function FinOpsDashboard({
               Autonomous 3-Way Reconciliation Controller
             </h1>
             <p className="text-sm text-slate-400 mt-1 max-w-2xl">
-              AI agent closes the enterprise finance-ops loop across a 50+ record synthetic batch (Invoices ↔ Bank/Razorpay UTRs ↔ POs), reporting match rates, TDS variances, and unresolvable exceptions.
+              AI agent closes the enterprise finance-ops loop across a 50+ record batch (Invoices ↔ Bank/Razorpay UTRs ↔ POs), reporting match rates, TDS variances, and unresolvable exceptions.
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-3">
+          <div className="flex flex-wrap items-center gap-2.5">
             <button
               onClick={onRunLoop}
               disabled={isLoading}
-              className="px-5 py-3 rounded-xl font-bold text-sm bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 flex items-center gap-2 shadow-lg shadow-emerald-500/20 hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 cursor-pointer"
+              className="px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 flex items-center gap-2 shadow-lg shadow-emerald-500/20 hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 cursor-pointer"
             >
               <Play className={`w-4 h-4 fill-current ${isLoading ? 'animate-spin' : ''}`} />
               {isLoading ? 'Executing Loop...' : 'Run FinOps Loop'}
             </button>
 
             <button
+              onClick={onOpenUploadModal}
+              className="px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-cyan-600/20 hover:bg-cyan-600/30 text-cyan-300 border border-cyan-500/40 flex items-center gap-1.5 transition-all cursor-pointer"
+            >
+              <FileSpreadsheet className="w-4 h-4 text-cyan-400" />
+              Upload Custom CSV
+            </button>
+
+            <button
               onClick={() => onRegenerate(60)}
               disabled={isLoading}
-              className="px-4 py-3 rounded-xl text-sm font-semibold bg-slate-800/80 hover:bg-slate-700/80 text-slate-200 border border-slate-700 flex items-center gap-2 transition-all cursor-pointer"
+              className="px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-slate-800/80 hover:bg-slate-700/80 text-slate-200 border border-slate-700 flex items-center gap-1.5 transition-all cursor-pointer"
             >
-              <RotateCw className="w-4 h-4 text-cyan-400" />
-              Regenerate Batch (60)
+              <RotateCw className="w-4 h-4 text-emerald-400" />
+              Regenerate (60)
             </button>
 
             <button
               onClick={onOpenBatchModal}
-              className="px-4 py-3 rounded-xl text-sm font-semibold bg-slate-800/80 hover:bg-slate-700/80 text-slate-200 border border-slate-700 flex items-center gap-2 transition-all cursor-pointer"
+              className="px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-slate-800/80 hover:bg-slate-700/80 text-slate-200 border border-slate-700 flex items-center gap-1.5 transition-all cursor-pointer"
             >
               <FileSpreadsheet className="w-4 h-4 text-emerald-400" />
-              Inspect Raw Batch
+              Inspect Batch
             </button>
 
             <button
               onClick={onOpenReportModal}
-              className="px-4 py-3 rounded-xl text-sm font-semibold bg-slate-800/80 hover:bg-slate-700/80 text-slate-200 border border-slate-700 flex items-center gap-2 transition-all cursor-pointer"
+              className="px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-slate-800/80 hover:bg-slate-700/80 text-slate-200 border border-slate-700 flex items-center gap-1.5 transition-all cursor-pointer"
             >
               <Download className="w-4 h-4 text-violet-400" />
               Audit Report
