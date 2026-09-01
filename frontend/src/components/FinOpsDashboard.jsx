@@ -133,97 +133,97 @@ export default function FinOpsDashboard({
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Hero Header & Control Bar */}
-      <div className="glass-panel p-6 rounded-2xl relative overflow-hidden border border-slate-700/60 shadow-2xl">
+      <div className="glass-panel p-4 sm:p-6 rounded-2xl sm:rounded-3xl relative overflow-hidden border border-slate-700/60 shadow-2xl">
         <div className="absolute -right-16 -top-16 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute -left-16 -bottom-16 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 sm:gap-6 relative z-10">
           <div>
-            <div className="flex items-center gap-2 mb-2">
-              <span className="px-3 py-1 text-xs font-semibold uppercase tracking-wider rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 flex items-center gap-1.5">
-                <Sparkles className="w-3.5 h-3.5" /> Razorpay AI FinOps Agent
+            <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-2">
+              <span className="px-2.5 py-0.5 text-[10px] sm:text-xs font-semibold uppercase tracking-wider rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 flex items-center gap-1">
+                <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5" /> Razorpay AI FinOps Agent
               </span>
-              <span className="px-2.5 py-1 text-xs font-mono rounded-full bg-slate-800 text-slate-300 border border-slate-700">
-                Batch: {summary.batchId}
+              <span className="px-2 py-0.5 text-[10px] sm:text-xs font-mono rounded-full bg-slate-800 text-slate-300 border border-slate-700">
+                Batch: {summary.batchId?.substring(0, 16)}
               </span>
-              <span className="px-2.5 py-1 text-xs font-medium rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 flex items-center gap-1">
+              <span className="px-2 py-0.5 text-[10px] sm:text-xs font-medium rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 flex items-center gap-1">
                 <Clock className="w-3 h-3" /> {summary.executionTimeMs}ms
               </span>
             </div>
-            <h1 className="text-2xl md:text-3xl font-extrabold text-white tracking-tight">
+            <h1 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white tracking-tight">
               Autonomous 3-Way Reconciliation Controller
             </h1>
-            <p className="text-sm text-slate-400 mt-1 max-w-2xl">
+            <p className="text-xs sm:text-sm text-slate-400 mt-1 max-w-2xl">
               AI agent closes the enterprise finance-ops loop across a 50+ record batch (Invoices ↔ Bank/Razorpay UTRs ↔ POs), reporting match rates, TDS variances, and unresolvable exceptions.
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2.5">
+          <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-2 sm:gap-2.5 pt-2 lg:pt-0">
             <button
               onClick={onRunLoop}
               disabled={isLoading}
-              className="px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 flex items-center gap-2 shadow-lg shadow-emerald-500/20 hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 cursor-pointer"
+              className="col-span-2 sm:col-auto px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 cursor-pointer"
             >
               <Play className={`w-4 h-4 fill-current ${isLoading ? 'animate-spin' : ''}`} />
-              {isLoading ? 'Executing Loop...' : 'Run FinOps Loop'}
+              {isLoading ? 'Executing...' : 'Run FinOps Loop'}
             </button>
 
             <button
               onClick={onOpenUploadModal}
-              className="px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-cyan-600/20 hover:bg-cyan-600/30 text-cyan-300 border border-cyan-500/40 flex items-center gap-1.5 transition-all cursor-pointer"
+              className="px-3 py-2 sm:px-3.5 sm:py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-cyan-600/20 hover:bg-cyan-600/30 text-cyan-300 border border-cyan-500/40 flex items-center justify-center gap-1.5 transition-all cursor-pointer"
             >
-              <FileSpreadsheet className="w-4 h-4 text-cyan-400" />
-              Upload Custom CSV
+              <FileSpreadsheet className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400 shrink-0" />
+              <span>Upload CSV</span>
             </button>
 
             <button
               onClick={() => onRegenerate(60)}
               disabled={isLoading}
-              className="px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-slate-800/80 hover:bg-slate-700/80 text-slate-200 border border-slate-700 flex items-center gap-1.5 transition-all cursor-pointer"
+              className="px-3 py-2 sm:px-3.5 sm:py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-slate-800/80 hover:bg-slate-700/80 text-slate-200 border border-slate-700 flex items-center justify-center gap-1.5 transition-all cursor-pointer"
             >
-              <RotateCw className="w-4 h-4 text-emerald-400" />
-              Regenerate (60)
+              <RotateCw className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400 shrink-0" />
+              <span>Regen (60)</span>
             </button>
 
             <button
               onClick={onOpenBatchModal}
-              className="px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-slate-800/80 hover:bg-slate-700/80 text-slate-200 border border-slate-700 flex items-center gap-1.5 transition-all cursor-pointer"
+              className="px-3 py-2 sm:px-3.5 sm:py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-slate-800/80 hover:bg-slate-700/80 text-slate-200 border border-slate-700 flex items-center justify-center gap-1.5 transition-all cursor-pointer"
             >
-              <FileSpreadsheet className="w-4 h-4 text-emerald-400" />
-              Inspect Batch
+              <FileSpreadsheet className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400 shrink-0" />
+              <span>Inspect</span>
             </button>
 
             <button
               onClick={onOpenReportModal}
-              className="px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-slate-800/80 hover:bg-slate-700/80 text-slate-200 border border-slate-700 flex items-center gap-1.5 transition-all cursor-pointer"
+              className="px-3 py-2 sm:px-3.5 sm:py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-slate-800/80 hover:bg-slate-700/80 text-slate-200 border border-slate-700 flex items-center justify-center gap-1.5 transition-all cursor-pointer"
             >
-              <Download className="w-4 h-4 text-violet-400" />
-              Audit Report
+              <Download className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-violet-400 shrink-0" />
+              <span>Audit</span>
             </button>
           </div>
         </div>
       </div>
 
       {/* KPI Cards Row */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4">
         {/* Match Rate Card */}
-        <div className="glass-card p-5 rounded-2xl border border-emerald-500/30 bg-emerald-950/20 relative overflow-hidden group">
+        <div className="col-span-2 sm:col-span-1 glass-card p-4 sm:p-5 rounded-2xl border border-emerald-500/30 bg-emerald-950/20 relative overflow-hidden group">
           <div className="flex justify-between items-start">
-            <span className="text-xs font-semibold uppercase tracking-wider text-emerald-400">Match Rate</span>
-            <span className="p-2 rounded-lg bg-emerald-500/20 text-emerald-400">
-              <CheckCircle2 className="w-5 h-5" />
+            <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-emerald-400">Match Rate</span>
+            <span className="p-1.5 sm:p-2 rounded-lg bg-emerald-500/20 text-emerald-400">
+              <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5" />
             </span>
           </div>
-          <div className="mt-3">
-            <div className="text-3xl font-extrabold text-emerald-300">{summary.matchRate}</div>
-            <div className="text-xs text-slate-400 mt-1 flex items-center gap-1.5">
-              <span className="font-semibold text-emerald-400">{summary.autoClosedRecords}</span> of {summary.totalRecords} records auto-closed
+          <div className="mt-2 sm:mt-3">
+            <div className="text-2xl sm:text-3xl font-extrabold text-emerald-300">{summary.matchRate}</div>
+            <div className="text-[11px] sm:text-xs text-slate-400 mt-1 flex items-center gap-1">
+              <span className="font-semibold text-emerald-400">{summary.autoClosedRecords}</span> / {summary.totalRecords} closed
             </div>
           </div>
           {/* Progress bar */}
-          <div className="w-full bg-slate-800/80 h-2 rounded-full mt-3 overflow-hidden">
+          <div className="w-full bg-slate-800/80 h-1.5 sm:h-2 rounded-full mt-2.5 sm:mt-3 overflow-hidden">
             <div
               className="bg-emerald-400 h-full rounded-full transition-all duration-1000"
               style={{ width: `${summary.matchRatePercent}%` }}
@@ -232,66 +232,66 @@ export default function FinOpsDashboard({
         </div>
 
         {/* Auto-Closed Volume */}
-        <div className="glass-card p-5 rounded-2xl border border-cyan-500/30 bg-cyan-950/20">
+        <div className="glass-card p-4 sm:p-5 rounded-2xl border border-cyan-500/30 bg-cyan-950/20">
           <div className="flex justify-between items-start">
-            <span className="text-xs font-semibold uppercase tracking-wider text-cyan-400">Auto-Closed Volume</span>
-            <span className="p-2 rounded-lg bg-cyan-500/20 text-cyan-400">
-              <TrendingUp className="w-5 h-5" />
+            <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-cyan-400">Auto-Closed</span>
+            <span className="p-1.5 sm:p-2 rounded-lg bg-cyan-500/20 text-cyan-400">
+              <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5" />
             </span>
           </div>
-          <div className="mt-3">
-            <div className="text-2xl font-extrabold text-cyan-200">
+          <div className="mt-2 sm:mt-3">
+            <div className="text-lg sm:text-2xl font-extrabold text-cyan-200 truncate">
               ₹{(summary.autoClosedVolume || 0).toLocaleString('en-IN')}
             </div>
-            <div className="text-xs text-slate-400 mt-1">
-              of ₹{(summary.totalBatchVolume || 0).toLocaleString('en-IN')} total batch
+            <div className="text-[10px] sm:text-xs text-slate-400 mt-1 truncate">
+              of ₹{(summary.totalBatchVolume || 0).toLocaleString('en-IN')} total
             </div>
           </div>
         </div>
 
         {/* Unresolved Exceptions */}
-        <div className="glass-card p-5 rounded-2xl border border-rose-500/30 bg-rose-950/20">
+        <div className="glass-card p-4 sm:p-5 rounded-2xl border border-rose-500/30 bg-rose-950/20">
           <div className="flex justify-between items-start">
-            <span className="text-xs font-semibold uppercase tracking-wider text-rose-400">Exceptions Flagged</span>
-            <span className="p-2 rounded-lg bg-rose-500/20 text-rose-400">
-              <AlertTriangle className="w-5 h-5" />
+            <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-rose-400">Exceptions</span>
+            <span className="p-1.5 sm:p-2 rounded-lg bg-rose-500/20 text-rose-400">
+              <AlertTriangle className="w-4 h-4 sm:w-5 sm:h-5" />
             </span>
           </div>
-          <div className="mt-3">
-            <div className="text-3xl font-extrabold text-rose-300">{summary.unresolvedExceptions}</div>
-            <div className="text-xs text-slate-400 mt-1">
-              {summary.exceptionRatePercent}% requiring human triage
+          <div className="mt-2 sm:mt-3">
+            <div className="text-2xl sm:text-3xl font-extrabold text-rose-300">{summary.unresolvedExceptions}</div>
+            <div className="text-[10px] sm:text-xs text-slate-400 mt-1">
+              {summary.exceptionRatePercent}% requiring triage
             </div>
           </div>
         </div>
 
         {/* Value at Risk */}
-        <div className="glass-card p-5 rounded-2xl border border-amber-500/30 bg-amber-950/20">
+        <div className="glass-card p-4 sm:p-5 rounded-2xl border border-amber-500/30 bg-amber-950/20">
           <div className="flex justify-between items-start">
-            <span className="text-xs font-semibold uppercase tracking-wider text-amber-400">Value at Risk</span>
-            <span className="p-2 rounded-lg bg-amber-500/20 text-amber-400">
-              <ShieldAlert className="w-5 h-5" />
+            <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-amber-400">At Risk</span>
+            <span className="p-1.5 sm:p-2 rounded-lg bg-amber-500/20 text-amber-400">
+              <ShieldAlert className="w-4 h-4 sm:w-5 sm:h-5" />
             </span>
           </div>
-          <div className="mt-3">
-            <div className="text-2xl font-extrabold text-amber-200">
+          <div className="mt-2 sm:mt-3">
+            <div className="text-lg sm:text-2xl font-extrabold text-amber-200 truncate">
               ₹{(summary.valueAtRisk || 0).toLocaleString('en-IN')}
             </div>
-            <div className="text-xs text-slate-400 mt-1">Disputes, missing POs & taxes</div>
+            <div className="text-[10px] sm:text-xs text-slate-400 mt-1">Disputes & missing POs</div>
           </div>
         </div>
 
         {/* AI Confidence Index */}
-        <div className="glass-card p-5 rounded-2xl border border-violet-500/30 bg-violet-950/20">
+        <div className="col-span-2 sm:col-span-1 glass-card p-4 sm:p-5 rounded-2xl border border-violet-500/30 bg-violet-950/20">
           <div className="flex justify-between items-start">
-            <span className="text-xs font-semibold uppercase tracking-wider text-violet-400">AI Confidence Index</span>
-            <span className="p-2 rounded-lg bg-violet-500/20 text-violet-400">
-              <Zap className="w-5 h-5" />
+            <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-violet-400">Confidence</span>
+            <span className="p-1.5 sm:p-2 rounded-lg bg-violet-500/20 text-violet-400">
+              <Zap className="w-4 h-4 sm:w-5 sm:h-5" />
             </span>
           </div>
-          <div className="mt-3">
-            <div className="text-3xl font-extrabold text-violet-300">{summary.aiConfidenceIndex}</div>
-            <div className="text-xs text-slate-400 mt-1">Multi-pass validation score</div>
+          <div className="mt-2 sm:mt-3">
+            <div className="text-2xl sm:text-3xl font-extrabold text-violet-300">{summary.aiConfidenceIndex}</div>
+            <div className="text-[10px] sm:text-xs text-slate-400 mt-1">Multi-pass validation</div>
           </div>
         </div>
       </div>
