@@ -17,7 +17,7 @@ import {
 import { useFinance } from '../context/FinanceContext';
 import { formatCurrency } from '../utils/formatters';
 
-export default function Navbar() {
+export default function Navbar({ activeMode, setActiveMode }) {
   const { 
     netBalance, 
     currentUser,
@@ -44,7 +44,7 @@ export default function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-slate-800/80 bg-[#0b0f19]/80 backdrop-blur-xl">
+    <header className="sticky top-0 z-40 w-full border-b border-slate-800/80 bg-[#0b0f19]/90 backdrop-blur-xl">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         {/* Brand */}
         <div className="flex items-center space-x-3">
@@ -59,25 +59,39 @@ export default function Navbar() {
                 AI Finance Controller
               </span>
               <span className="text-[10px] uppercase font-bold tracking-widest px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                Live Auth
+                Razorpay Agent
               </span>
             </div>
-            <p className="text-xs text-slate-400 flex items-center gap-1">
-              <GraduationCap className="w-3.5 h-3.5 text-indigo-400" /> 
-              {currentUser ? currentUser.role || 'Student Financial Hub' : 'Personal Finance Hub'}
+            <p className="text-xs text-slate-400 flex items-center gap-1 font-mono">
+              Autonomous FinOps Reconciliation • 50+ Batch Loop
             </p>
           </div>
         </div>
 
-        {/* Center Quick Stats */}
-        <div className="hidden md:flex items-center space-x-4 px-4 py-1.5 rounded-full bg-slate-900/90 border border-slate-800">
-          <div className="flex items-center space-x-2 text-xs text-slate-400">
-            <Wallet className="w-3.5 h-3.5 text-emerald-400" />
-            <span>Net Balance:</span>
-            <span className={`font-bold text-sm ${netBalance >= 0 ? 'text-emerald-400' : 'text-rose-400'}`}>
-              {formatCurrency(netBalance)}
-            </span>
-          </div>
+        {/* Center Mode Switcher */}
+        <div className="flex items-center p-1 rounded-xl bg-slate-900/90 border border-slate-800">
+          <button
+            onClick={() => setActiveMode('finops')}
+            className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
+              activeMode === 'finops'
+                ? 'bg-emerald-500 text-slate-950 shadow-md'
+                : 'text-slate-400 hover:text-white'
+            }`}
+          >
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>FinOps Agent Loop (50+)</span>
+          </button>
+          <button
+            onClick={() => setActiveMode('personal')}
+            className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
+              activeMode === 'personal'
+                ? 'bg-indigo-600 text-white shadow-md'
+                : 'text-slate-400 hover:text-white'
+            }`}
+          >
+            <Wallet className="w-3.5 h-3.5" />
+            <span>Voice Tracker</span>
+          </button>
         </div>
 
         {/* Action Buttons */}

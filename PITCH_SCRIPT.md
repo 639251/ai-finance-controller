@@ -1,88 +1,54 @@
-# 🎙️ 5-Minute Project Pitch & Demo Video Script
-## Project: AI Finance Controller (Smart Personal Finance Web Application)
+# 🎙️ Razorpay AI Finance Controller — 5-Minute Pitch Script
+
+> **Target Problem**: Autonomous Finance-Operations 3-Way Reconciliation across 50+ Synthetic Record Batch  
+> **Key Metrics**: Match Rate (83.3% Auto-Closed), Anomaly Isolation & HITL Resolution
 
 ---
 
-### ⏱️ Timeline & Presentation Breakdown (Total: 5 Minutes)
+## ⏱️ Minute-by-Minute Pitch Timeline
 
-```
-[0:00 - 0:45] 🎯 1. The Hook & The Problem Statement
-[0:45 - 1:45] 🎙️ 2. The Core Innovation: Live Voice-to-JSON Demo
-[1:45 - 2:45] ⚡ 3. Dynamic Auto-Tagging & Spending Velocity Alerts
-[2:45 - 3:45] 💡 4. AI Financial Advisor & Micro-Savings Feed (Gemini AI)
-[3:45 - 4:30] 🛠️ 5. System Architecture & Technical Depth
-[4:30 - 5:00] 🚀 6. Future Scope & Impactful Conclusion
-```
+### 0:00 - 0:45: The Problem & Razorpay Challenge Brief
+* *"Hi everyone! In modern corporate finance and B2B operations, finance teams spend hundreds of hours manually reconciling vendor invoices against bank and payment gateway settlement feeds like Razorpay UTRs and Purchase Orders."*
+* *"Real-world complexities—such as Section 194C/194J statutory TDS deductions, GST tax rate discrepancies, vendor alias variations, shadow spend with missing POs, and duplicate payments—result in month-end delays and severe cash leakage."*
+* *"To solve this, we built the **Razorpay AI Finance Controller**—an autonomous agent that ingests a 50+ record corporate batch, executes multi-pass reconciliation, reports live match rates, and isolates unresolvable exceptions into an intelligent triage console."*
 
 ---
 
-## 🎬 Detailed Script & Screen Recording Walkthrough
-
-### 📍 [0:00 - 0:45] — Part 1: The Hook & Problem
-* **On Screen:** Show landing page or headline statistics / Slide 1.
-* **Speaker Script:**
-  > *"Did you know that over 74% of college students and young professionals want to save money, but more than 80% stop tracking expenses within just two weeks?*  
-  > *Why? Because manual budgeting apps are tedious, boring, and require opening an app and typing every single receipt.*  
-  > *Today, we’re introducing **AI Finance Controller** — an intelligent personal finance platform that allows users to log expenses with their voice in under 3 seconds, sets smart velocity budget caps, and provides automated, AI-driven financial recommendations."*
-
----
-
-### 📍 [0:45 - 1:45] — Part 2: Core Innovation — Live Voice Demo
-* **On Screen:** Open `http://localhost:5174/`, click on **"Voice Entry"**, show microphone wave animation.
-* **Speaker Script:**
-  > *"Let’s see it in action. Instead of typing amounts and categories manually, I simply click the microphone and speak naturally:*  
-  >  
-  > 🗣️ **Say into mic:** *'I spent $25 on pizza at Domino's yesterday.'*  
-  >  
-  > *Look at what just happened:*  
-  > 1. *Our AI transcribed the speech in real-time using OpenAI Whisper / Web Speech API.*  
-  > 2. *Our NLP Entity Extractor automatically identified that **$25.00** is the amount, **Domino's Pizza** is the merchant, **Food/Dining** is the category, and yesterday's date was accurately calculated.*  
-  > 3. *With just one click on **'Confirm & Record'**, the transaction is instantly added to our ledger and charts!"*
+### 0:45 - 2:00: Live Demo — The 50+ Batch & Match Rate
+* *(Show Dashboard & Click **"Run FinOps Loop"**)*
+* *"Here is our executive FinOps dashboard. When I click **Run FinOps Loop**, our autonomous agent processes a 60-record enterprise batch in just 124 milliseconds."*
+* *"Notice the top KPIs:*
+  * ***Batch Match Rate**: **83.3% Auto-Closed** (50 out of 60 records reconciled).*
+  * ***Auto-Closed Volume**: **₹1.36 Crore**.*
+  * ***Exceptions Flagged**: **10 records** requiring review.*
+  * ***Value at Risk**: **₹19.92 Lakh** in anomalies locked.*
+  * ***AI Confidence Index**: **95.2%**.*
+* *(Show the Distribution Donut Chart and Recharts Analytics).*
 
 ---
 
-### 📍 [1:45 - 2:45] — Part 3: Dynamic Tagging & Spending Velocity
-* **On Screen:** Scroll to the **Spending Analytics Chart** (Donut & Trend) and **Budget Progress Bars**.
-* **Speaker Script:**
-  > *"Tracking is only half the battle — controlling spending is the real goal.*  
-  > *AI Finance Controller features a **Spending Velocity Engine**.*  
-  > *Notice this alert right here: **'You have used 72% of your Food/Dining budget in the first 10 days.'** Most apps only tell you when you've already run out of money. Our velocity engine warns you beforehand if your daily pace is too fast.*  
-  > *Users can customize monthly caps per category, and the dashboard provides real-time Recharts visualizations showing category breakdowns and cashflow timelines."*
+### 2:00 - 3:15: Multi-Pass Agent Architecture
+* *"How did the agent achieve this? It runs a 4-pass pipeline:*
+  1. ***Pass 1: Deterministic Exact Match*** *(100% parity across Invoice #, net amount, and bank UTR).*
+  2. ***Pass 2: Statutory TDS Mathematical Match*** *(Automatically identifies Section 194C @ 2% and 194J @ 10% net payouts).*
+  3. ***Pass 3: Fuzzy Vendor Alias Match*** *(Normalizes aliases like 'AMZN AWS INDIA' vs 'Amazon Web Services India Pvt Ltd').*
+  4. ***Pass 4: Anomaly Diagnostics*** *(Isolates non-compliant edge cases)."*
 
 ---
 
-### 📍 [2:45 - 3:45] — Part 4: AI Financial Advisor (Gemini Integration)
-* **On Screen:** Point to the **AI Financial Advisor & Savings Feed** card.
-* **Speaker Script:**
-  > *"Next is our **AI Financial Advisor**, powered by Google Gemini and behavioral analysis rules.*  
-  > *Instead of generic tips, it analyzes real user transactions:*  
-  > *For example, it noticed 6 café visits this month and recommended: **'Brewing coffee at home 3 days a week saves ~$45/month'**.*  
-  > *It also provides tailored advice on student transit passes, open-source textbook repositories, and meal-prepping habits."*
+### 3:15 - 4:15: Exception Triage & Human-in-the-Loop (HITL) Resolution
+* *(Switch to **"Exception Triage Console"** Tab)*
+* *"Look at the unresolved exceptions. Instead of generic errors, our agent provides deep root-cause diagnostics:*
+  * ***Amount Mismatch***: *Billed amount differs by ₹8,500 due to an unrecorded line item.*
+  * ***GST Tax Discrepancy***: *Vendor billed 28% GST instead of the contracted 18% SAC rate.*
+  * ***Missing PO Reference***: *Shadow spend detected without an approved Purchase Order.*
+  * ***Duplicate Payment Risk***: *Flagged two independent bank debits referencing the identical invoice.*
+* *(Click **"Approve Variance Waiver"** on an exception)*
+* *"With 1 click, the Finance Controller approves a policy waiver—and notice how the Match Rate immediately recalculates in real-time!"*
 
 ---
 
-### 📍 [3:45 - 4:30] — Part 5: Technical Stack & Architecture
-* **On Screen:** Show code structure, GitHub repo, or Architecture Diagram in `README.md`.
-* **Speaker Script:**
-  > *"Under the hood, AI Finance Controller is built with:*  
-  > - ***Frontend:*** *React 18 with Vite, Tailwind CSS for glassmorphism styling, and Recharts.*  
-  > - ***Backend:*** *Node.js and Express REST API.*  
-  > - ***AI & Speech:*** *Dual-mode voice engine — OpenAI Whisper API for server-side audio processing + browser Web Speech API for zero-config offline accessibility + Google Gemini API for generative advice.*  
-  > - ***Security:*** *Real-time authentication with isolated multi-user storage and JWT sessions."*
-
----
-
-### 📍 [4:30 - 5:00] — Part 6: Future Scope & Conclusion
-* **On Screen:** Back to Dashboard full view with smiling avatar.
-* **Speaker Script:**
-  > *"In future iterations, we plan to integrate open-banking Plaid APIs for direct card sync, AI receipt OCR scanning via camera, and gamified streak rewards for hitting savings goals.*  
-  > *AI Finance Controller bridges the gap between complex spreadsheets and effortless student budgeting.*  
-  > *Thank you! We invite you to check out our live demo and GitHub repository."*
-
----
-
-### 💡 Video Recording Tips:
-1. **Screen Resolution**: Record at 1080p (1920x1080) for sharp text readability.
-2. **Audio**: Use a clear USB mic or headset to avoid room echo.
-3. **Cursor**: Keep mouse movements smooth and purposeful when clicking on buttons.
-4. **Tool**: You can record easily with **OBS Studio**, **Loom**, or **Windows Screen Recorder (Win + Alt + R)**.
+### 4:15 - 5:00: Audit Trail, Compliance & Conclusion
+* *(Click **"Audit Report"** & show CSV/JSON export)*
+* *"Every decision is backed by an automated audit trail exportable as compliance CSV and JSON statements."*
+* *"The Razorpay AI Finance Controller transforms tedious finance ops into an autonomous, closed-loop system with complete accuracy, speed, and governance. Thank you!"*

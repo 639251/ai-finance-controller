@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import finopsRoutes from './routes/finopsRoutes.js';
 import transactionRoutes from './routes/transactionRoutes.js';
 import voiceRoutes from './routes/voiceRoutes.js';
 import budgetRoutes from './routes/budgetRoutes.js';
@@ -24,13 +25,14 @@ app.use(express.urlencoded({ extended: true }));
 app.get('/api/health', (req, res) => {
   res.json({
     status: 'healthy',
-    service: 'AI Finance Controller API',
+    service: 'AI Finance Controller FinOps Engine',
     time: new Date().toISOString(),
-    aiEngine: process.env.OPENAI_API_KEY ? 'OpenAI Whisper STT + Heuristic NLP' : 'Web Speech STT + Heuristic NLP'
+    engine: 'Autonomous FinOps Reconciliation Agent'
   });
 });
 
 // API Routes
+app.use('/api/finops', finopsRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/transactions', transactionRoutes);
 app.use('/api/voice', voiceRoutes);
