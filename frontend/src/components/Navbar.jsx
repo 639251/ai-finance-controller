@@ -116,116 +116,102 @@ export default function Navbar({ activeMode, setActiveMode }) {
                 <PlusCircle className="w-3.5 h-3.5 text-emerald-400" />
                 <span className="hidden sm:inline">Add</span>
               </button>
-            </>
-          )}
 
-          {/* Budget Manager Button */}
-          <button
-            onClick={() => setIsBudgetModalOpen(true)}
-            className="p-2 rounded-xl bg-slate-800/90 hover:bg-slate-700/90 border border-slate-700 text-slate-300 hover:text-white transition-all"
-            title="Manage Budget Caps"
-          >
-            <Sliders className="w-4 h-4" />
-          </button>
+              {/* Budget Manager Button */}
+              <button
+                onClick={() => setIsBudgetModalOpen(true)}
+                className="p-2 rounded-xl bg-slate-800/90 hover:bg-slate-700/90 border border-slate-700 text-slate-300 hover:text-white transition-all hidden sm:block"
+                title="Manage Budget Caps"
+              >
+                <Sliders className="w-4 h-4" />
+              </button>
 
-          {/* Reset Demo Data Button */}
-          <button
-            onClick={resetDemoData}
-            className="p-2 rounded-xl bg-slate-800/60 hover:bg-slate-700/60 border border-slate-800 text-slate-400 hover:text-amber-400 transition-all"
-            title="Reset to Student Demo Dataset"
-          >
-            <RotateCcw className="w-4 h-4" />
-          </button>
+              {/* Reset Demo Data Button */}
+              <button
+                onClick={resetDemoData}
+                className="p-2 rounded-xl bg-slate-800/60 hover:bg-slate-700/60 border border-slate-800 text-slate-400 hover:text-amber-400 transition-all hidden sm:block"
+                title="Reset to Student Demo Dataset"
+              >
+                <RotateCcw className="w-4 h-4" />
+              </button>
 
-          {/* Auth & User Profile Dropdown */}
-          <div className="relative">
-            {isAuthenticated && currentUser ? (
-              <div>
-                <button
-                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                  className="flex items-center space-x-2 pl-2 pr-1 py-1 rounded-xl hover:bg-slate-800/60 border border-transparent hover:border-slate-700 transition-all"
-                >
-                  <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-purple-500 to-indigo-500 flex items-center justify-center font-bold text-xs text-white shadow-md">
-                    {getInitials(currentUser.name)}
-                  </div>
-                  <div className="hidden lg:block text-left">
-                    <p className="text-xs font-bold text-white leading-tight">{currentUser.name}</p>
-                    <p className="text-[10px] text-slate-400 leading-tight">{currentUser.email}</p>
-                  </div>
-                  <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
-                </button>
-
-                {/* Dropdown Menu */}
-                {isDropdownOpen && (
-                  <div className="absolute right-0 mt-2 w-56 rounded-2xl bg-slate-900 border border-slate-700 shadow-2xl p-2 z-50 animate-fadeIn space-y-1">
-                    <div className="p-2 border-b border-slate-800">
-                      <p className="text-xs font-bold text-white">{currentUser.name}</p>
-                      <p className="text-[11px] text-emerald-400">{currentUser.role || 'Student'}</p>
-                      <p className="text-[10px] text-slate-400">{currentUser.email}</p>
-                    </div>
-
+              {/* Auth & User Profile Dropdown */}
+              <div className="relative">
+                {isAuthenticated && currentUser ? (
+                  <div>
                     <button
-                      onClick={() => {
-                        setIsDropdownOpen(false);
-                        setAuthMode('signup');
-                        setIsAuthModalOpen(true);
-                      }}
-                      className="w-full flex items-center gap-2 p-2 rounded-xl text-xs text-slate-300 hover:text-white hover:bg-slate-800 transition-all"
+                      onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                      className="flex items-center space-x-2 pl-2 pr-1 py-1 rounded-xl hover:bg-slate-800/60 border border-transparent hover:border-slate-700 transition-all"
                     >
-                      <UserPlus className="w-4 h-4 text-emerald-400" />
-                      <span>Create Another Account</span>
+                      <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gradient-to-tr from-purple-500 to-indigo-500 flex items-center justify-center font-bold text-xs text-white shadow-md">
+                        {getInitials(currentUser.name)}
+                      </div>
+                      <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
                     </button>
 
+                    {/* Dropdown Menu */}
+                    {isDropdownOpen && (
+                      <div className="absolute right-0 mt-2 w-56 rounded-2xl bg-slate-900 border border-slate-700 shadow-2xl p-2 z-50 animate-fadeIn space-y-1">
+                        <div className="p-2 border-b border-slate-800">
+                          <p className="text-xs font-bold text-white">{currentUser.name}</p>
+                          <p className="text-[11px] text-emerald-400">{currentUser.role || 'Student'}</p>
+                          <p className="text-[10px] text-slate-400">{currentUser.email}</p>
+                        </div>
+
+                        <button
+                          onClick={() => {
+                            setIsDropdownOpen(false);
+                            setAuthMode('signup');
+                            setIsAuthModalOpen(true);
+                          }}
+                          className="w-full flex items-center gap-2 p-2 rounded-xl text-xs text-slate-300 hover:text-white hover:bg-slate-800 transition-all"
+                        >
+                          <UserPlus className="w-4 h-4 text-emerald-400" />
+                          <span>Create Another Account</span>
+                        </button>
+
+                        <button
+                          onClick={() => {
+                            setIsDropdownOpen(false);
+                            setAuthMode('login');
+                            setIsAuthModalOpen(true);
+                          }}
+                          className="w-full flex items-center gap-2 p-2 rounded-xl text-xs text-slate-300 hover:text-white hover:bg-slate-800 transition-all"
+                        >
+                          <UserCheck className="w-4 h-4 text-indigo-400" />
+                          <span>Switch Account</span>
+                        </button>
+
+                        <button
+                          onClick={() => {
+                            setIsDropdownOpen(false);
+                            logoutUser();
+                          }}
+                          className="w-full flex items-center gap-2 p-2 rounded-xl text-xs text-rose-400 hover:text-rose-300 hover:bg-rose-500/10 transition-all"
+                        >
+                          <LogOut className="w-4 h-4" />
+                          <span>Sign Out</span>
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <div className="flex items-center space-x-1.5">
                     <button
                       onClick={() => {
-                        setIsDropdownOpen(false);
                         setAuthMode('login');
                         setIsAuthModalOpen(true);
                       }}
-                      className="w-full flex items-center gap-2 p-2 rounded-xl text-xs text-slate-300 hover:text-white hover:bg-slate-800 transition-all"
+                      className="flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-bold text-slate-200 transition-all"
                     >
-                      <UserCheck className="w-4 h-4 text-indigo-400" />
-                      <span>Switch Account</span>
-                    </button>
-
-                    <button
-                      onClick={() => {
-                        setIsDropdownOpen(false);
-                        logoutUser();
-                      }}
-                      className="w-full flex items-center gap-2 p-2 rounded-xl text-xs text-rose-400 hover:text-rose-300 hover:bg-rose-500/10 transition-all"
-                    >
-                      <LogOut className="w-4 h-4" />
-                      <span>Sign Out</span>
+                      <LogIn className="w-3.5 h-3.5 text-emerald-400" />
+                      <span>Log In</span>
                     </button>
                   </div>
                 )}
               </div>
-            ) : (
-              <div className="flex items-center space-x-2">
-                <button
-                  onClick={() => {
-                    setAuthMode('login');
-                    setIsAuthModalOpen(true);
-                  }}
-                  className="flex items-center gap-1 px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-bold text-slate-200 transition-all"
-                >
-                  <LogIn className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>Log In</span>
-                </button>
-                <button
-                  onClick={() => {
-                    setAuthMode('signup');
-                    setIsAuthModalOpen(true);
-                  }}
-                  className="flex items-center gap-1 px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition-all shadow-md"
-                >
-                  <UserPlus className="w-3.5 h-3.5" />
-                  <span>Sign Up</span>
-                </button>
-              </div>
-            )}
-          </div>
+            </>
+          )}
         </div>
       </div>
     </header>
